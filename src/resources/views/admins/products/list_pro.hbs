@@ -1,0 +1,114 @@
+<div class="card-body">
+    <div class="table-responsive">
+        <div class="mt-1">
+            {{#if messages.success}}
+            <div class="alert alert-success" role="alert">
+                {{messages.success}}
+            </div>
+            {{/if}}
+            {{#if messages.danger}}
+            <div class="alert alert-danger" role="alert">
+                {{messages.danger}}
+            </div>
+            {{/if}}
+            {{#if messages.warning}}
+            <div class="alert alert-warning" role="alert">
+                {{messages.warning}}
+            </div>
+            {{/if}}
+        </div>
+        <div class="container-add-right">
+            <div class="container-add">
+                {{#if deletedCount}}
+                <a href="/admin/products/strash" class="btn btn-success">Thùng rác({{deletedCount}})</a>
+                {{/if}}
+                <a href="/admin/products/add" class="btn btn-success">Add</a>
+            </div>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Hình ảnh</th>
+                    <th scope="col" width="25%">Tên sản phẩm</th>
+                    <th scope="col">Giá bán</th>
+                    <th scope="col">Số lượng</th>
+                    <th scope="col">Danh mục</th>
+                    <th scope="col">Chức năng</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each products}}
+                <tr>
+                    <td>{{sum @index 1}}</td>
+                    <td width="12%"><img class="img-thumbnail" src="/upload/{{this.product_img}}" alt="" width="150" height="150"></td>
+                    <td width="13%">{{this.product_name}}</td>
+                    <td>{{this.product_price}}</td>
+                    <td>{{this.product_quantity}}</td>
+                    <td>{{this.category_id.category_name}}</td>
+                    <td>
+                        <div class="function_click">
+                            <a href="/admin/products/{{this._id}}/edit" class="mr-1 function_click-edit">
+                                <i class="fas fa-fw fa-pen"></i>
+                            </a>
+                            <a href="" class="ml-1 function_click-delete" data-toggle="modal" data-id="{{this._id}}"
+                                data-target="#delete-modal">
+                                <i class="fas fa-fw fa-trash"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                {{else}}
+                <tr>
+                    <td colspan="3" class="text-center">
+                        Bạn chưa thêm danh mục nào.
+                        <a href="/admin/categories/add">Thêm danh mục</a>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal Delete -->
+<div id="delete-modal" class="modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Xóa danh mục</h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Bạn có chắc chắn muốn xóa không!</p>
+            </div>
+            <div class="modal-footer">
+                <button id="btn-delete" type="button" class="btn btn-danger">Xóa bỏ</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{!-- Delete hidden form --}}
+<form method="POST" name="delete-form" autocomplete="off"></form>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var productId;
+        var deleteForm = document.forms['delete-form'];
+        var btnDelete = document.getElementById('btn-delete');
+
+        //When dialog  confirm clicked
+        $('#delete-modal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            productId = button.data('id');
+        });
+
+        //When delete btn clicked
+        btnDelete.onclick = function () {
+            deleteForm.action = '/admin/products/' + productId + '?_method=DELETE';
+            deleteForm.submit();
+        }
+    });
+</script>

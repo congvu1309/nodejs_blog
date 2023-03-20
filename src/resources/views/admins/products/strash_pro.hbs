@@ -1,0 +1,122 @@
+<div class="card-body">
+    <div class="table-responsive">
+        <h2 class="d-flex justify-content-center">Sản phẩm đã xóa</h2>
+        <div class="mt-1">
+            {{#if messages.success}}
+            <div class="alert alert-success" role="alert">
+                {{messages.success}}
+            </div>
+            {{/if}}
+            {{#if messages.danger}}
+            <div class="alert alert-danger" role="alert">
+                {{messages.danger}}
+            </div>
+            {{/if}}
+            {{#if messages.warning}}
+            <div class="alert alert-warning" role="alert">
+                {{messages.warning}}
+            </div>
+            {{/if}}
+        </div>
+        <div class="container-add-right">
+            <div class="container-add">
+                <a href="/admin/products" class="btn btn-success">Quay lại</a>
+            </div>
+        </div>
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Hình ảnh</th>
+                    <th>Tên sản phẩm</th>
+                    <th>Thời gian xóa</th>
+                    <th>Chức năng</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each products}}
+                <tr>
+                    <td width="5%">
+                        <p class="td-stt">{{sum @index 1}}</p>
+                    </td>
+                    <td width="15%">
+                        <img src="/upload/{{this.product_img}}" alt="">
+                    </td>
+                    <td>
+                        <p class="td-form">{{this.product_name}}</p>
+                    </td>
+                    <td>
+                        <p class="td-form">{{this.deletedAt}}</p>
+                    </td>
+                    <td width="25%">
+                        <div class="function_click">
+                            <a href="" class="mr-1 function_click-edit btn-restore" data-id="{{this._id}}">Khôi phục</a>
+                            <a href="" class="ml-1 function_click-delete" data-toggle="modal" data-id="{{this._id}}"
+                                data-target="#delete-modal">Xóa vĩnh viễn</a>
+                        </div>
+                    </td>
+                </tr>
+                {{else}}
+                <tr>
+                    <td colspan="5" class="text-center">
+                        Thùng rác trống.
+                        <a href="/admin/products">Danh sách sản phẩm</a>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal Delete -->
+<div id="delete-modal" class="modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Xóa danh mục</h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Hành động này không thể khôi phục.</p>
+            </div>
+            <div class="modal-footer">
+                <button id="btn-delete" type="button" class="btn btn-danger">Xóa vĩnh viễn</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<form method="POST" name="delete-form"></form>
+<form method="POST" name="restore-form"></form>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var productId;
+        var deleteForm = document.forms['delete-form'];
+        var restoreForm = document.forms['restore-form'];
+        var btnDelete = document.getElementById('btn-delete');
+        var btnRestore = $('.btn-restore');
+
+        //When dialog  confirm clicked
+        $('#delete-modal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            productId = button.data('id');
+        });
+
+        //Delete btn clicked
+        btnDelete.onclick = function () {
+            deleteForm.action = '/admin/products/' + productId + '/force?_method=DELETE';
+            deleteForm.submit();
+        }
+
+        //Restore btn clicked
+        btnRestore.click(function (e) {
+            e.preventDefault();
+            var productId = $(this).data('id');
+            restoreForm.action = '/admin/products/' + productId + '/restore?_method=PATCH';
+            restoreForm.submit();
+        })
+    });
+</script>

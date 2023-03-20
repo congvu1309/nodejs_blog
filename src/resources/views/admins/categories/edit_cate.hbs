@@ -1,0 +1,23 @@
+<div class="form-padding">
+    <div class="mt-4">
+        <h3 class="d-flex justify-content-center">Sửa danh mục</h3>
+        <form method="POST" action="/admin/categories/{{categories._id}}/edit" autocomplete="off">
+            <div class="form-group">
+                <label for="category_name">Tên danh mục</label>
+                <input type="text" class="form-control" id="category_name" value="{{categories.category_name}}"
+                    name="category_name">
+            </div>
+            <div class="mt-1">
+                {{#if err_warning}}
+                <div class="alert alert-danger" role="alert">
+                    {{err_warning}}
+                </div>
+                {{/if}}
+            </div>
+            <div class="mt-4 d-flex justify-content-center">
+                <a href="/admin/categories" class="mr-2 btn btn-info">Danh sách</a>
+                <button type="submit" class="ml-2 btn btn-success">Lưu lại</button>
+            </div>
+        </form>
+    </div>
+</div>

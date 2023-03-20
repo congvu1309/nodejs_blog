@@ -1,0 +1,31 @@
+{
+  "name": "web_nodejs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon --inspect src/app.js",
+    "watch": "node-sass --watch src/resources/scss/ --output src/public/css/",
+    "watch2": "node-sass --watch src/resources/scss/admin --output src/public/css/admin",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "express-fileupload": "^1.4.0",
+    "express-flash": "^0.0.2",
+    "express-handlebars": "^6.0.7",
+    "express-session": "^1.17.3",
+    "method-override": "^3.0.0",
+    "mongoose": "^6.9.2",
+    "mongoose-delete": "^0.5.4",
+    "mongoose-slug-generator": "^1.0.4",
+    "node-sass": "^8.0.0",
+    "passport": "^0.6.0"
+  },
+  "devDependencies": {
+    "module-js": "^7.0.1",
+    "nodemon": "^2.0.20"
+  }
+}

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/admin.css">
+    <link rel="stylesheet" href="/css/admin2.css">
+</head>
+<body>
+    <div id="wrapper">
+
+        {{!-- {{>sidebar_admin}} --}}
+
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <div id="content">
+
+                {{!-- {{> header_admin}} --}}
+
+                {{{body}}}
+
+                {{!-- {{> footer_admin}} --}}
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="/vendor/chart.js/Chart.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="/vendor/js/sb-admin-2.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="/vendor/js/demo/chart-area-demo.js"></script>
+    <script src="/vendor/js/demo/chart-pie-demo.js"></script>
+    
+</body>
+</html>
